@@ -43,7 +43,7 @@ TOKEN — секретный ключ для генерации JWT-токено
 ### 4. Сборка всех контейнеров и запуск приложения
 *Требуется установка [docker](https://www.docker.com/products/docker-desktop/), если не установлен, смотрите [зависимости.](https://github.com/voronkov44/rest_go_kv?tab=readme-ov-file#%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0-docker)*
 ```bash
-docker-compose up --build
+docker-compose up -d --build
 ```
 
 Сервер будет доступен на http://localhost:8080
@@ -56,6 +56,15 @@ docker ps
 
 #Просмотр всех контейнеров, включая остановленные
 docker ps -a
+
+# Запуск в фоновом режиме
+docker-compose up -d --build
+
+# Доступ к БД
+docker exec -it postgres_golang psql -U postgres -d db_kv
+
+# Остановка всех сервисов
+docker-compose down
 
 # Остановка контейнера
 docker stop <container_id>
