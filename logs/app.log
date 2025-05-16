@@ -1,0 +1,99 @@
+2025/05/16 13:24:35 logger.go:37: DEBUG: Attempting to load .env file
+2025/05/16 13:24:35 logger.go:29: INFO: .env file loaded successfully
+2025/05/16 13:24:35 logger.go:29: INFO: Config loaded: DSN and TOKEN retrieved from environment variables
+2025/05/16 13:24:35 logger.go:29: INFO: Successfully connected to the database
+2025/05/16 13:24:35 logger.go:37: DEBUG: JWT instance created
+2025/05/16 13:24:35 logger.go:29: INFO: UserRepository instance created
+2025/05/16 13:24:35 logger.go:29: INFO: OrderRepository instance created
+2025/05/16 13:24:35 logger.go:29: INFO: Server started on port 8080
+2025/05/16 13:25:54 logger.go:29: INFO: Received request to create user
+2025/05/16 13:25:54 logger.go:37: DEBUG: Parsed request body: &{Name:Valera Email:valera@valera.ru Age:33 Password:123}
+2025/05/16 13:25:54 logger.go:37: DEBUG: Checking if email exists: valera@valera.ru
+2025/05/16 13:25:54 logger.go:29: INFO: Email existence check completed for: valera@valera.ru, exists: false
+2025/05/16 13:25:54 logger.go:37: DEBUG: Creating user with email: valera@valera.ru
+2025/05/16 13:25:54 logger.go:29: INFO: User created successfully with ID: 14
+2025/05/16 13:25:54 logger.go:29: INFO: User created successfully: ID=14, Email=valera@valera.ru
+2025/05/16 13:26:33 logger.go:29: INFO: Login attempt received
+2025/05/16 13:26:33 logger.go:37: DEBUG: Login request parsed successfully: &{Email:valera@valera.ru Password:123}
+2025/05/16 13:26:33 logger.go:37: DEBUG: Fetching user by email: valera@valera.ru
+2025/05/16 13:26:33 logger.go:29: INFO: User fetched by email: valera@valera.ru
+2025/05/16 13:26:33 logger.go:29: INFO: User valera@valera.ru authenticated successfully
+2025/05/16 13:26:33 logger.go:29: INFO: Token created successfully for email: valera@valera.ru
+2025/05/16 13:26:33 logger.go:37: DEBUG: JWT token generated: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZhbGVyYUB2YWxlcmEucnUifQ.3kqBB5Jq1cKdVXgzGoBsIbmJ0AaOD_QRvpury-M1pAU
+2025/05/16 13:26:33 logger.go:29: INFO: Login response sent successfully for user: valera@valera.ru
+2025/05/16 13:26:46 logger.go:29: INFO: Login attempt received
+2025/05/16 13:26:46 logger.go:37: DEBUG: Login request parsed successfully: &{Email:valera@valera.ru Password:123}
+2025/05/16 13:26:46 logger.go:37: DEBUG: Fetching user by email: valera@valera.ru
+2025/05/16 13:26:46 logger.go:29: INFO: User fetched by email: valera@valera.ru
+2025/05/16 13:26:46 logger.go:29: INFO: User valera@valera.ru authenticated successfully
+2025/05/16 13:26:47 logger.go:29: INFO: Token created successfully for email: valera@valera.ru
+2025/05/16 13:26:47 logger.go:37: DEBUG: JWT token generated: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZhbGVyYUB2YWxlcmEucnUifQ.3kqBB5Jq1cKdVXgzGoBsIbmJ0AaOD_QRvpury-M1pAU
+2025/05/16 13:26:47 logger.go:29: INFO: Login response sent successfully for user: valera@valera.ru
+2025/05/16 13:27:21 logger.go:29: INFO: Received order creation request
+2025/05/16 13:27:21 logger.go:37: DEBUG: Fetching user by ID: 14
+2025/05/16 13:27:21 logger.go:29: INFO: User fetched by ID: 14
+2025/05/16 13:27:21 logger.go:37: DEBUG: Creating order for user ID: 14
+2025/05/16 13:27:21 logger.go:29: INFO: Order created successfully with ID: 9
+2025/05/16 13:27:21 logger.go:29: INFO: Order created: ID=9, UserID=14, Product=Laptop
+2025/05/16 13:27:26 logger.go:29: INFO: Received order creation request
+2025/05/16 13:27:26 logger.go:37: DEBUG: Fetching user by ID: 14
+2025/05/16 13:27:26 logger.go:29: INFO: User fetched by ID: 14
+2025/05/16 13:27:26 logger.go:37: DEBUG: Creating order for user ID: 14
+2025/05/16 13:27:26 logger.go:29: INFO: Order created successfully with ID: 10
+2025/05/16 13:27:26 logger.go:29: INFO: Order created: ID=10, UserID=14, Product=Laptop
+2025/05/16 13:27:48 logger.go:29: INFO: Received order list request
+2025/05/16 13:27:48 logger.go:37: DEBUG: Fetching user by ID: 11
+2025/05/16 13:27:48 logger.go:29: INFO: User fetched by ID: 11
+2025/05/16 13:27:48 logger.go:37: DEBUG: Fetching orders for user ID: 11
+2025/05/16 13:27:48 logger.go:29: INFO: Fetched 8 orders for user ID: 11
+2025/05/16 13:27:48 logger.go:29: INFO: Found 8 orders for user ID 11
+2025/05/16 13:27:48 logger.go:29: INFO: Found 8 orders for user ID 11
+2025/05/16 13:27:57 logger.go:29: INFO: Received order list request
+2025/05/16 13:27:57 logger.go:37: DEBUG: Fetching user by ID: 14
+2025/05/16 13:27:57 logger.go:29: INFO: User fetched by ID: 14
+2025/05/16 13:27:57 logger.go:37: DEBUG: Fetching orders for user ID: 14
+2025/05/16 13:27:57 logger.go:29: INFO: Fetched 2 orders for user ID: 14
+2025/05/16 13:27:57 logger.go:29: INFO: Found 2 orders for user ID 14
+2025/05/16 13:27:57 logger.go:29: INFO: Found 2 orders for user ID 14
+2025/05/16 13:30:16 logger.go:29: INFO: Received request to update user
+2025/05/16 13:30:16 logger.go:37: DEBUG: Parsed user ID: 14
+2025/05/16 13:30:16 logger.go:37: DEBUG: Fetching user by ID: 14
+2025/05/16 13:30:16 logger.go:29: INFO: User fetched by ID: 14
+2025/05/16 13:30:16 logger.go:37: DEBUG: Parsed request body: &{Name:valera Email:valera@valera.ru Age:26 Password:}
+2025/05/16 13:30:16 logger.go:37: DEBUG: Updating user with ID: 14
+2025/05/16 13:30:16 logger.go:29: INFO: User updated successfully with ID: 14
+2025/05/16 13:30:16 logger.go:29: INFO: User updated successfully: ID=14
+2025/05/16 13:30:23 logger.go:29: INFO: Received request to get all users
+2025/05/16 13:30:23 logger.go:37: DEBUG: Query params: page=1, limit=5, minAge=15, maxAge=30
+2025/05/16 13:30:23 logger.go:37: DEBUG: Fetching users page: 1, limit: 5, minAge: 15, maxAge: 30
+2025/05/16 13:30:23 logger.go:29: INFO: Fetched 5 users
+2025/05/16 13:30:23 logger.go:29: INFO: Successfully retrieved 5 users
+2025/05/16 13:30:31 logger.go:29: INFO: Received request to get all users
+2025/05/16 13:30:31 logger.go:37: DEBUG: Query params: page=1, limit=5, minAge=15, maxAge=30
+2025/05/16 13:30:31 logger.go:37: DEBUG: Fetching users page: 1, limit: 5, minAge: 15, maxAge: 30
+2025/05/16 13:30:31 logger.go:29: INFO: Fetched 5 users
+2025/05/16 13:30:31 logger.go:29: INFO: Successfully retrieved 5 users
+2025/05/16 13:30:54 logger.go:29: INFO: Received request to get all users
+2025/05/16 13:30:54 logger.go:37: DEBUG: Query params: page=1, limit=12, minAge=15, maxAge=30
+2025/05/16 13:30:54 logger.go:37: DEBUG: Fetching users page: 1, limit: 12, minAge: 15, maxAge: 30
+2025/05/16 13:30:54 logger.go:29: INFO: Fetched 6 users
+2025/05/16 13:30:54 logger.go:29: INFO: Successfully retrieved 6 users
+2025/05/16 13:31:03 logger.go:29: INFO: Received request to get all users
+2025/05/16 13:31:03 logger.go:37: DEBUG: Query params: page=1, limit=10, minAge=0, maxAge=0
+2025/05/16 13:31:03 logger.go:37: DEBUG: Fetching users page: 1, limit: 10, minAge: 0, maxAge: 0
+2025/05/16 13:31:03 logger.go:29: INFO: Fetched 10 users
+2025/05/16 13:31:03 logger.go:29: INFO: Successfully retrieved 10 users
+2025/05/16 13:31:42 logger.go:29: INFO: Received request to create user
+2025/05/16 13:31:42 logger.go:37: DEBUG: Parsed request body: &{Name:Valera2 Email:valera2@valera.ru Age:34 Password:123}
+2025/05/16 13:31:42 logger.go:37: DEBUG: Checking if email exists: valera2@valera.ru
+2025/05/16 13:31:42 logger.go:29: INFO: Email existence check completed for: valera2@valera.ru, exists: false
+2025/05/16 13:31:42 logger.go:37: DEBUG: Creating user with email: valera2@valera.ru
+2025/05/16 13:31:42 logger.go:29: INFO: User created successfully with ID: 15
+2025/05/16 13:31:42 logger.go:29: INFO: User created successfully: ID=15, Email=valera2@valera.ru
+2025/05/16 13:31:46 logger.go:29: INFO: Received request to delete user
+2025/05/16 13:31:46 logger.go:37: DEBUG: Parsed user ID: 15
+2025/05/16 13:31:46 logger.go:37: DEBUG: Fetching user by ID: 15
+2025/05/16 13:31:46 logger.go:29: INFO: User fetched by ID: 15
+2025/05/16 13:31:46 logger.go:37: DEBUG: Deleting user with ID: 15
+2025/05/16 13:31:46 logger.go:29: INFO: User deleted successfully with ID: 15
+2025/05/16 13:31:46 logger.go:29: INFO: User deleted successfully: ID=15

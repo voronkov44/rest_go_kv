@@ -1,6 +1,8 @@
 package orders
 
-import "rest_go_kv/pkg/db"
+import (
+	"rest_go_kv/pkg/db"
+)
 
 type OrderRepository struct {
 	Database *db.Db
@@ -12,12 +14,12 @@ func NewOrderRepository(database *db.Db) *OrderRepository {
 	}
 }
 
-func (repo *OrderRepository) Create(Order *Order) (*Order, error) {
-	result := repo.Database.DB.Create(Order)
+func (repo *OrderRepository) Create(order *Order) (*Order, error) {
+	result := repo.Database.DB.Create(order)
 	if result.Error != nil {
 		return nil, result.Error
 	}
-	return Order, nil
+	return order, nil
 }
 
 func (repo *OrderRepository) GetByUserID(userID uint) ([]Order, error) {

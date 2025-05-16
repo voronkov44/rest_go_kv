@@ -2,6 +2,7 @@ package users
 
 import (
 	"net/http"
+	"rest_go_kv/pkg/logger"
 	"rest_go_kv/pkg/req"
 	"rest_go_kv/pkg/res"
 	"rest_go_kv/pkg/utils"
@@ -29,19 +30,25 @@ func NewUserHandler(router *http.ServeMux, deps UserHandlerDeps) {
 
 func (handler *UserHandler) Create() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		logger.Info("Received request to create user")
+
 		// Парсим тело запроса
 		body, err := req.HandleBody[UserCreateRequest](&w, r)
 		if err != nil {
+			logger.Error("Failed to parse request body: %v", err)
 			return
 		}
+		logger.Debug("Parsed request body: %+v", body)
 
 		// Проверка на email
 		exists, err := handler.UserRepository.IsEmailExist(body.Email)
 		if err != nil {
+			logger.Error("Failed to check email existence: %v", err)
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
 		if exists {
+			logger.Info("Attempt to create user with existing email: %s", body.Email)
 			http.Error(w, "User already exists", http.StatusBadRequest)
 			return
 		}
@@ -49,6 +56,7 @@ func (handler *UserHandler) Create() http.HandlerFunc {
 		// Хешируем пароль
 		hashedPassword, err := utils.HashPassword(body.Password)
 		if err != nil {
+			logger.Error("Failed to hash password: %v", err)
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
@@ -59,9 +67,12 @@ func (handler *UserHandler) Create() http.HandlerFunc {
 
 		createdUser, err := handler.UserRepository.Create(user)
 		if err != nil {
+			logger.Error("Failed to create user: %v", err)
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
+
+		logger.Info("User created successfully: ID=%d, Email=%s", createdUser.ID, createdUser.Email)
 		res.Json(w, UserCreateResponse{
 			ID:    createdUser.ID,
 			Name:  createdUser.Name,
@@ -73,6 +84,8 @@ func (handler *UserHandler) Create() http.HandlerFunc {
 
 func (handler *UserHandler) GetAll() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		logger.Info("Received request to get all users")
+
 		query := r.URL.Query()
 
 		page, err := strconv.Atoi(query.Get("page"))
@@ -88,12 +101,17 @@ func (handler *UserHandler) GetAll() http.HandlerFunc {
 		minAge, _ := strconv.Atoi(query.Get("min_age"))
 		maxAge, _ := strconv.Atoi(query.Get("max_age"))
 
+		logger.Debug("Query params: page=%d, limit=%d, minAge=%d, maxAge=%d", page, limit, minAge, maxAge)
+
 		// Получаем пользователей из репозитория
 		users, err := handler.UserRepository.GetAll(page, limit, minAge, maxAge)
 		if err != nil {
+			logger.Error("Failed to get users: %v", err)
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
+
+		logger.Info("Successfully retrieved %d users", len(users))
 
 		// Маппим в респонс структуру (чтобы не вывести пользователю ненужные поля)
 		var response []UserCreateResponse
@@ -111,19 +129,26 @@ func (handler *UserHandler) GetAll() http.HandlerFunc {
 
 func (handler *UserHandler) GoTo() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		logger.Info("Received request to get user by ID")
+
 		// Получение id из path value
 		id, err := utils.ParseID(r)
 		if err != nil {
+			logger.Error("Invalid user ID: %v", err)
 			http.Error(w, "invalid user id", http.StatusBadRequest)
 			return
 		}
+		logger.Debug("Parsed user ID: %d", id)
 
 		// Получаем пользователя из репозитория
 		user, err := handler.UserRepository.GetById(id)
 		if err != nil {
+			logger.Error("User not found: %v", err)
 			http.Error(w, err.Error(), http.StatusNotFound)
 			return
 		}
+
+		logger.Info("User retrieved: ID=%d, Email=%s", user.ID, user.Email)
 
 		// Маппинг в респонс структуру
 		response := UserCreateResponse{
@@ -139,16 +164,21 @@ func (handler *UserHandler) GoTo() http.HandlerFunc {
 
 func (handler *UserHandler) UpdateAll() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		logger.Info("Received request to update user")
+
 		// Получение id из path value
 		id, err := utils.ParseID(r)
 		if err != nil {
+			logger.Error("Invalid user ID: %v", err)
 			http.Error(w, "invalid user id", http.StatusBadRequest)
 			return
 		}
+		logger.Debug("Parsed user ID: %d", id)
 
 		// Проверяем наличие пользователя
 		existingUser, err := handler.UserRepository.GetById(id)
 		if err != nil {
+			logger.Error("User not found: %v", err)
 			http.Error(w, "user not found", http.StatusNotFound)
 			return
 		}
@@ -156,17 +186,21 @@ func (handler *UserHandler) UpdateAll() http.HandlerFunc {
 		// Парсим тело запроса
 		body, err := req.HandleBody[UserUpdateRequest](&w, r)
 		if err != nil {
+			logger.Error("Failed to parse request body: %v", err)
 			return
 		}
+		logger.Debug("Parsed request body: %+v", body)
 
 		// Проверка на email (если поменялся)
 		if existingUser.Email != body.Email {
 			exists, err := handler.UserRepository.IsEmailExist(body.Email)
 			if err != nil {
+				logger.Error("Failed to check email existence: %v", err)
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
 			}
 			if exists {
+				logger.Info("Attempt to update user with existing email: %s", body.Email)
 				http.Error(w, "User already exists", http.StatusBadRequest)
 				return
 			}
@@ -181,6 +215,7 @@ func (handler *UserHandler) UpdateAll() http.HandlerFunc {
 		if body.Password != "" {
 			hashedPassword, err := utils.HashPassword(body.Password)
 			if err != nil {
+				logger.Error("Failed to hash password: %v", err)
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
 			}
@@ -190,9 +225,12 @@ func (handler *UserHandler) UpdateAll() http.HandlerFunc {
 		// Сохраняем изменения
 		updatedUser, err := handler.UserRepository.Update(existingUser)
 		if err != nil {
+			logger.Error("Failed to update user: %v", err)
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
+
+		logger.Info("User updated successfully: ID=%d", updatedUser.ID)
 
 		// Возвращаем ответ
 		res.Json(w, UserUpdateResponse{
@@ -206,15 +244,20 @@ func (handler *UserHandler) UpdateAll() http.HandlerFunc {
 
 func (handler *UserHandler) Delete() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		logger.Info("Received request to delete user")
+
 		// Получение id из path value
 		id, err := utils.ParseID(r)
 		if err != nil {
+			logger.Error("Invalid user ID: %v", err)
 			http.Error(w, "invalid user id", http.StatusBadRequest)
 			return
 		}
+		logger.Debug("Parsed user ID: %d", id)
 
 		_, err = handler.UserRepository.GetById(id)
 		if err != nil {
+			logger.Error("User not found: %v", err)
 			http.Error(w, "user not found", http.StatusNotFound)
 			return
 		}
@@ -222,9 +265,12 @@ func (handler *UserHandler) Delete() http.HandlerFunc {
 		// Удаляем пользователя
 		err = handler.UserRepository.Delete(int(id))
 		if err != nil {
+			logger.Error("Failed to delete user: %v", err)
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
+		
+		logger.Info("User deleted successfully: ID=%d", id)
 
 		w.WriteHeader(http.StatusNoContent)
 	}

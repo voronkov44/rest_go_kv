@@ -8,14 +8,21 @@ import (
 	"rest_go_kv/internal/orders"
 	"rest_go_kv/internal/users"
 	"rest_go_kv/pkg/db"
+	"rest_go_kv/pkg/jwt"
+	"rest_go_kv/pkg/logger"
 )
 
 func main() {
+	// подключение логгера
+	logger.InitLogger()
+
 	//Чтение строки DSN
 	conf := configs.LoadConfig()
 	// Подключение к бд через горм
 	database := db.NewDb(conf)
 	router := http.NewServeMux()
+
+	jwtManager := jwt.NewJWT(conf.Auth.Secret)
 
 	// Подключение репозиториев
 	userRepository := users.NewUserRepository(database)
@@ -25,6 +32,7 @@ func main() {
 	auth.NewAuthHandler(router, auth.AuthHandlerDeps{
 		Config:         conf,
 		UserRepository: userRepository,
+		JWT:            jwtManager,
 	})
 	users.NewUserHandler(router, users.UserHandlerDeps{
 		UserRepository: userRepository,
@@ -40,5 +48,6 @@ func main() {
 	}
 
 	fmt.Println("Server started at port 8080")
+	logger.Info("Server started on port %d", 8080)
 	server.ListenAndServe()
 }

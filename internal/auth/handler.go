@@ -5,6 +5,7 @@ import (
 	"rest_go_kv/configs"
 	"rest_go_kv/internal/users"
 	"rest_go_kv/pkg/jwt"
+	"rest_go_kv/pkg/logger"
 	"rest_go_kv/pkg/req"
 	"rest_go_kv/pkg/res"
 
@@ -34,21 +35,27 @@ func NewAuthHandler(router *http.ServeMux, deps AuthHandlerDeps) {
 
 func (handler *AuthHandler) Login() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		logger.Info("Login attempt received")
 		body, err := req.HandleBody[LoginRequest](&w, r)
 		if err != nil {
+			logger.Error("Failed to parse login request body: %v", err)
 			return
 		}
+		logger.Debug("Login request parsed successfully: %+v", body)
 
 		// Получаем юзера по email
 		user, err := handler.UserRepository.GetByEmail(body.Email)
 		if err != nil {
+			logger.Error("User not found for email: %s. Error: %v", body.Email, err)
 			http.Error(w, "invalid credentials", http.StatusUnauthorized)
 			return
 		}
+		logger.Info("User %s authenticated successfully", body.Email)
 
 		// Проверяем пароль
 		err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(body.Password))
 		if err != nil {
+			logger.Error("Failed to generate JWT token for user: %s. Error: %v", body.Email, err)
 			http.Error(w, "invalid credentials", http.StatusUnauthorized)
 			return
 		}
@@ -62,8 +69,11 @@ func (handler *AuthHandler) Login() http.HandlerFunc {
 			return
 		}
 
+		logger.Debug("JWT token generated: %s", token)
+
 		res.Json(w, LoginResponse{
 			Token: token,
 		}, http.StatusOK)
+		logger.Info("Login response sent successfully for user: %s", body.Email)
 	}
 }
