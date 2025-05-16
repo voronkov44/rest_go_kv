@@ -4,32 +4,31 @@ import (
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"log"
 	"os"
 	"rest_go_kv/internal/orders"
 	"rest_go_kv/internal/users"
-	"rest_go_kv/pkg/logger"
+	"time"
 )
 
 func main() {
+	time.Sleep(5 * time.Second)
 	err := godotenv.Load(".env")
 	if err != nil {
-		logger.Error("Error loading .env file: %v", err)
-		os.Exit(1)
+		log.Fatalf("Error loading .env file: %v", err)
 	}
-	logger.Info("Environment variables loaded successfully")
+	log.Println("Environment variables loaded successfully")
 
 	db, err := gorm.Open(postgres.Open(os.Getenv("DSN")), &gorm.Config{})
 	if err != nil {
-		logger.Error("Failed to connect to database: %v", err)
-		os.Exit(1)
+		log.Fatalf("Failed to connect to database: %v", err)
 	}
-	logger.Info("Successfully connected to the database")
+	log.Println("Successfully connected to the database")
 
 	err = db.AutoMigrate(&users.User{}, &orders.Order{})
 	if err != nil {
-		logger.Error("Error migrating database: %v", err)
-		os.Exit(1)
+		log.Fatalf("Error migrating database: %v", err)
 	}
-	logger.Info("Database migration completed successfully")
+	log.Println("Database migration completed successfully")
 
 }
