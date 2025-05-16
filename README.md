@@ -28,8 +28,20 @@ cd rest_go_kv
 DSN="host=postgres user=postgres password=postgres dbname=db_kv port=5432 sslmode=disable"
 TOKEN="your_strong_secret_key"
 ```
+#### Пояснение:
+DSN — строка подключения к базе данных PostgreSQL.
+
+Важно:
+Параметр host=postgres менять не нужно, так как это имя контейнера базы данных внутри Docker-Compose сети.
+Контейнеры в одной сети Docker взаимодействуют между собой по именам сервисов из docker-compose.yml.
+
+Остальные параметры (`user`, `password`, `dbname`, `port`, `sslmode`) можно изменить, но не забудьте в этом случае также обновить их значения в docker-compose.yml, чтобы всё работало корректно.
+
+TOKEN — секретный ключ для генерации JWT-токенов.
+Установите здесь любой надёжный ключ для защиты авторизации в API.
 
 ### 4. Сборка всех контейнеров и запуск приложения
+*Требуется установка [docker](https://www.docker.com/products/docker-desktop/), если не установлен, смотрите [зависимости.]()*
 ```bash
 docker-compose up --build
 ```
@@ -83,20 +95,9 @@ app.log
 
 ```
 http://localhost:8080/swagger/index.html
-
 ```
 
-Доступные эндпоинты:
+## Зависимости
+### Установка docker
+Установка пакета [Docker Engine](https://docs.docker.com/engine/install/)
 
-- POST /person - создание человека
-
-- GET /person - список всех людей
-
-- GET /person/{id} - получение конкретного человека
-
-- PATCH /person/{id} - обновление данных
-
-- DELETE /person/{id} - удаление
-
-## **Зависимости**
-Установка базы данных [PostgreSQL](https://www.postgresql.org/download/)
