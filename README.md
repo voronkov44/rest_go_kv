@@ -97,6 +97,35 @@ app.log
 http://localhost:8080/swagger/index.html
 ```
 
+### Доступные API Endpoints
+
+#### Authentication
+
+| Method | Endpoint       | Description               | 
+|--------|----------------|---------------------------|
+| POST   | `/auth/login`  | Авторизация пользователя  |
+
+---
+
+#### Users
+
+| Method | Endpoint       | Description                       |
+|--------|----------------|-----------------------------------|
+| GET    | `/users`       | Получить всех пользователей       |
+| POST   | `/users`       | Создать нового пользователя       |
+| GET    | `/users/{id}`  | Получить пользователя по ID       |
+| PUT    | `/users/{id}`  | Обновить данные пользователя      |
+| DELETE | `/users/{id}`  | Удалить пользователя              |
+
+---
+
+#### Orders
+
+| Method | Endpoint                   | Description                               |
+|--------|----------------------------|-------------------------------------------|
+| GET    | `/users/{user_id}/orders`  | Получить список заказов пользователя      |
+| POST   | `/users/{user_id}/orders`  | Создать новый заказ для пользователя      |
+
 ## Зависимости
 ### Установка docker
 Установка пакета [Docker Engine](https://docs.docker.com/engine/install/)
