@@ -28,6 +28,17 @@ func NewUserHandler(router *http.ServeMux, deps UserHandlerDeps) {
 	router.HandleFunc("DELETE /users/{id}", handler.Delete())
 }
 
+// Create godoc
+// @Summary Создать пользователя
+// @Description Создаёт нового пользователя
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param request body UserCreateRequest true "Данные пользователя"
+// @Success 200 {object} users.UserCreateResponse
+// @Failure 400 {string} string "bad request"
+// @Failure 500 {string} string "internal error"
+// @Router /users [post]
 func (handler *UserHandler) Create() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		logger.Info("Received request to create user")
@@ -82,6 +93,14 @@ func (handler *UserHandler) Create() http.HandlerFunc {
 	}
 }
 
+// GetAll godoc
+// @Summary Получить всех пользователей
+// @Description Возвращает список всех пользователей
+// @Tags users
+// @Produce json
+// @Success 200 {array} users.UserCreateResponse
+// @Failure 500 {string} string "internal error"
+// @Router /users [get]
 func (handler *UserHandler) GetAll() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		logger.Info("Received request to get all users")
@@ -127,6 +146,15 @@ func (handler *UserHandler) GetAll() http.HandlerFunc {
 	}
 }
 
+// GoTo godoc
+// @Summary Получить пользователя по ID
+// @Description Возвращает пользователя по его ID
+// @Tags users
+// @Produce json
+// @Param id path int true "ID пользователя"
+// @Success 200 {object} users.UserCreateResponse
+// @Failure 404 {string} string "user not found"
+// @Router /users/{id} [get]
 func (handler *UserHandler) GoTo() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		logger.Info("Received request to get user by ID")
@@ -162,6 +190,18 @@ func (handler *UserHandler) GoTo() http.HandlerFunc {
 	}
 }
 
+// UpdateAll godoc
+// @Summary Обновить данные пользователя
+// @Description Полностью обновляет данные пользователя по ID
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param id path int true "ID пользователя"
+// @Param request body UserUpdateRequest true "Обновлённые данные пользователя"
+// @Success 200 {object} users.UserUpdateResponse
+// @Failure 404 {string} string "user not found"
+// @Failure 400 {string} string "bad request"
+// @Router /users/{id} [put]
 func (handler *UserHandler) UpdateAll() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		logger.Info("Received request to update user")
@@ -242,6 +282,15 @@ func (handler *UserHandler) UpdateAll() http.HandlerFunc {
 	}
 }
 
+// Delete godoc
+// @Summary Удалить пользователя
+// @Description Удаляет пользователя по ID
+// @Tags users
+// @Produce json
+// @Param id path int true "ID пользователя"
+// @Success 204 {string} string "No Content"
+// @Failure 404 {string} string "user not found"
+// @Router /users/{id} [delete]
 func (handler *UserHandler) Delete() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		logger.Info("Received request to delete user")
@@ -269,7 +318,7 @@ func (handler *UserHandler) Delete() http.HandlerFunc {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		
+
 		logger.Info("User deleted successfully: ID=%d", id)
 
 		w.WriteHeader(http.StatusNoContent)

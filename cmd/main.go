@@ -10,8 +10,21 @@ import (
 	"rest_go_kv/pkg/db"
 	"rest_go_kv/pkg/jwt"
 	"rest_go_kv/pkg/logger"
+
+	"github.com/swaggo/http-swagger"
+	_ "rest_go_kv/docs"
 )
 
+// @title           REST API
+// @version         1.0
+// @description     This is a server for managing users, authentication and orders.
+// @termsOfService  http://swagger.io/terms/
+
+// @contact.name   Andrew Voronkov
+// @contact.email  voronkovworkemail@gmail.com
+
+// @host      localhost:8080
+// @BasePath  /
 func main() {
 	// подключение логгера
 	logger.InitLogger()
@@ -41,6 +54,8 @@ func main() {
 		OrderRepository: orderRepository,
 		UserRepository:  userRepository,
 	})
+
+	router.Handle("/swagger/", httpSwagger.WrapHandler)
 
 	server := http.Server{
 		Addr:    ":8080",

@@ -33,6 +33,17 @@ func NewAuthHandler(router *http.ServeMux, deps AuthHandlerDeps) {
 	router.HandleFunc("POST /auth/login", handler.Login())
 }
 
+// Login godoc
+// @Summary Авторизация пользователя
+// @Description Авторизация пользователя по email и паролю
+// @Tags auth
+// @Accept json
+// @Produce json
+// @Param request body LoginRequest true "Данные для авторизации"
+// @Success 200 {object} LoginResponse
+// @Failure 401 {string} string "invalid credentials"
+// @Failure 500 {string} string "could not generate token"
+// @Router /auth/login [post]
 func (handler *AuthHandler) Login() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		logger.Info("Login attempt received")

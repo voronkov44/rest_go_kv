@@ -28,6 +28,18 @@ func NewOrderHandler(router *http.ServeMux, deps OrderHandlerDeps) {
 	router.HandleFunc("GET /users/{user_id}/orders", handler.GoTo())
 }
 
+// Create godoc
+// @Summary Создать заказ
+// @Description Создаёт новый заказ для пользователя по ID
+// @Tags orders
+// @Accept json
+// @Produce json
+// @Param user_id path int true "ID пользователя"
+// @Param request body OrderCreateRequest true "Данные заказа"
+// @Success 200 {object} OrderResponse
+// @Failure 400 {string} string "bad request"
+// @Failure 404 {string} string "user not found"
+// @Router /users/{user_id}/orders [post]
 func (handler *OrderHandler) Create() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		logger.Info("Received order creation request")
@@ -75,6 +87,16 @@ func (handler *OrderHandler) Create() http.HandlerFunc {
 	}
 }
 
+// GoTo godoc
+// @Summary Получить список заказов пользователя
+// @Description Возвращает все заказы пользователя по ID
+// @Tags orders
+// @Accept json
+// @Produce json
+// @Param user_id path int true "ID пользователя"
+// @Success 200 {array} OrderResponse
+// @Failure 404 {string} string "user not found"
+// @Router /users/{user_id}/orders [get]
 func (handler *OrderHandler) GoTo() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		logger.Info("Received order list request")

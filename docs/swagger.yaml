@@ -1,0 +1,355 @@
+basePath: /
+definitions:
+  internal_auth.LoginRequest:
+    properties:
+      email:
+        example: user@example.com
+        type: string
+      password:
+        example: securepassword
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  internal_auth.LoginResponse:
+    properties:
+      token:
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        type: string
+    type: object
+  internal_orders.OrderCreateRequest:
+    properties:
+      price:
+        example: 1599.99
+        type: number
+      product:
+        example: Laptop
+        type: string
+      quantity:
+        example: 1
+        type: integer
+    required:
+    - price
+    - product
+    - quantity
+    type: object
+  internal_orders.OrderResponse:
+    properties:
+      created_at:
+        example: "2025-05-15 12:00:00"
+        type: string
+      id:
+        example: 1
+        type: integer
+      price:
+        example: 1599.99
+        type: number
+      product:
+        example: Laptop
+        type: string
+      quantity:
+        example: 1
+        type: integer
+      user_id:
+        example: 12
+        type: integer
+    type: object
+  internal_users.UserCreateRequest:
+    properties:
+      age:
+        example: 25
+        type: integer
+      email:
+        example: john.doe@example.com
+        type: string
+      name:
+        example: John Doe
+        type: string
+      password:
+        example: secretpassword
+        type: string
+    required:
+    - age
+    - email
+    - name
+    - password
+    type: object
+  internal_users.UserCreateResponse:
+    properties:
+      age:
+        example: 25
+        type: integer
+      email:
+        example: john.doe@example.com
+        type: string
+      id:
+        example: 1
+        type: integer
+      name:
+        example: John Doe
+        type: string
+    type: object
+  internal_users.UserUpdateRequest:
+    properties:
+      age:
+        example: 25
+        type: integer
+      email:
+        example: john.doe@example.com
+        type: string
+      name:
+        example: John Doe
+        type: string
+      password:
+        example: secretpassword
+        type: string
+    required:
+    - age
+    - email
+    - name
+    type: object
+  internal_users.UserUpdateResponse:
+    properties:
+      age:
+        example: 25
+        type: integer
+      email:
+        example: john.doe@example.com
+        type: string
+      id:
+        example: 1
+        type: integer
+      name:
+        example: John Doe
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: voronkovworkemail@gmail.com
+    name: Andrew Voronkov
+  description: This is a server for managing users, authentication and orders.
+  termsOfService: http://swagger.io/terms/
+  title: REST API
+  version: "1.0"
+paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Авторизация пользователя по email и паролю
+      parameters:
+      - description: Данные для авторизации
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal_auth.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_auth.LoginResponse'
+        "401":
+          description: invalid credentials
+          schema:
+            type: string
+        "500":
+          description: could not generate token
+          schema:
+            type: string
+      summary: Авторизация пользователя
+      tags:
+      - auth
+  /users:
+    get:
+      description: Возвращает список всех пользователей
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/internal_users.UserCreateResponse'
+            type: array
+        "500":
+          description: internal error
+          schema:
+            type: string
+      summary: Получить всех пользователей
+      tags:
+      - users
+    post:
+      consumes:
+      - application/json
+      description: Создаёт нового пользователя
+      parameters:
+      - description: Данные пользователя
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal_users.UserCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_users.UserCreateResponse'
+        "400":
+          description: bad request
+          schema:
+            type: string
+        "500":
+          description: internal error
+          schema:
+            type: string
+      summary: Создать пользователя
+      tags:
+      - users
+  /users/{id}:
+    delete:
+      description: Удаляет пользователя по ID
+      parameters:
+      - description: ID пользователя
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            type: string
+        "404":
+          description: user not found
+          schema:
+            type: string
+      summary: Удалить пользователя
+      tags:
+      - users
+    get:
+      description: Возвращает пользователя по его ID
+      parameters:
+      - description: ID пользователя
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_users.UserCreateResponse'
+        "404":
+          description: user not found
+          schema:
+            type: string
+      summary: Получить пользователя по ID
+      tags:
+      - users
+    put:
+      consumes:
+      - application/json
+      description: Полностью обновляет данные пользователя по ID
+      parameters:
+      - description: ID пользователя
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновлённые данные пользователя
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal_users.UserUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_users.UserUpdateResponse'
+        "400":
+          description: bad request
+          schema:
+            type: string
+        "404":
+          description: user not found
+          schema:
+            type: string
+      summary: Обновить данные пользователя
+      tags:
+      - users
+  /users/{user_id}/orders:
+    get:
+      consumes:
+      - application/json
+      description: Возвращает все заказы пользователя по ID
+      parameters:
+      - description: ID пользователя
+        in: path
+        name: user_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/internal_orders.OrderResponse'
+            type: array
+        "404":
+          description: user not found
+          schema:
+            type: string
+      summary: Получить список заказов пользователя
+      tags:
+      - orders
+    post:
+      consumes:
+      - application/json
+      description: Создаёт новый заказ для пользователя по ID
+      parameters:
+      - description: ID пользователя
+        in: path
+        name: user_id
+        required: true
+        type: integer
+      - description: Данные заказа
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal_orders.OrderCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_orders.OrderResponse'
+        "400":
+          description: bad request
+          schema:
+            type: string
+        "404":
+          description: user not found
+          schema:
+            type: string
+      summary: Создать заказ
+      tags:
+      - orders
+swagger: "2.0"

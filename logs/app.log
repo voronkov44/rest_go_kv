@@ -97,3 +97,57 @@
 2025/05/16 13:31:46 logger.go:37: DEBUG: Deleting user with ID: 15
 2025/05/16 13:31:46 logger.go:29: INFO: User deleted successfully with ID: 15
 2025/05/16 13:31:46 logger.go:29: INFO: User deleted successfully: ID=15
+2025/05/16 14:04:27 logger.go:37: DEBUG: Attempting to load .env file
+2025/05/16 14:04:27 logger.go:29: INFO: .env file loaded successfully
+2025/05/16 14:04:27 logger.go:29: INFO: Config loaded: DSN and TOKEN retrieved from environment variables
+2025/05/16 14:04:27 logger.go:29: INFO: Successfully connected to the database
+2025/05/16 14:04:27 logger.go:37: DEBUG: JWT instance created
+2025/05/16 14:04:27 logger.go:29: INFO: Server started on port 8080
+2025/05/16 14:21:09 logger.go:37: DEBUG: Attempting to load .env file
+2025/05/16 14:21:09 logger.go:29: INFO: .env file loaded successfully
+2025/05/16 14:21:09 logger.go:29: INFO: Config loaded: DSN and TOKEN retrieved from environment variables
+2025/05/16 14:21:09 logger.go:29: INFO: Successfully connected to the database
+2025/05/16 14:21:09 logger.go:37: DEBUG: JWT instance created
+2025/05/16 14:21:09 logger.go:29: INFO: Server started on port 8080
+2025/05/16 14:55:41 logger.go:37: DEBUG: Attempting to load .env file
+2025/05/16 14:55:41 logger.go:29: INFO: .env file loaded successfully
+2025/05/16 14:55:41 logger.go:29: INFO: Config loaded: DSN and TOKEN retrieved from environment variables
+2025/05/16 14:55:41 logger.go:29: INFO: Successfully connected to the database
+2025/05/16 14:55:41 logger.go:37: DEBUG: JWT instance created
+2025/05/16 14:55:41 logger.go:29: INFO: Server started on port 8080
+2025/05/16 14:58:19 logger.go:37: DEBUG: Attempting to load .env file
+2025/05/16 14:58:19 logger.go:29: INFO: .env file loaded successfully
+2025/05/16 14:58:19 logger.go:29: INFO: Config loaded: DSN and TOKEN retrieved from environment variables
+2025/05/16 14:58:19 logger.go:29: INFO: Successfully connected to the database
+2025/05/16 14:58:19 logger.go:37: DEBUG: JWT instance created
+2025/05/16 14:58:19 logger.go:29: INFO: Server started on port 8080
+2025/05/16 15:06:19 logger.go:37: DEBUG: Attempting to load .env file
+2025/05/16 15:06:19 logger.go:29: INFO: .env file loaded successfully
+2025/05/16 15:06:19 logger.go:29: INFO: Config loaded: DSN and TOKEN retrieved from environment variables
+2025/05/16 15:06:19 logger.go:29: INFO: Successfully connected to the database
+2025/05/16 15:06:19 logger.go:37: DEBUG: JWT instance created
+2025/05/16 15:06:19 logger.go:29: INFO: Server started on port 8080
+2025/05/16 15:09:53 logger.go:37: DEBUG: Attempting to load .env file
+2025/05/16 15:09:53 logger.go:29: INFO: .env file loaded successfully
+2025/05/16 15:09:53 logger.go:29: INFO: Config loaded: DSN and TOKEN retrieved from environment variables
+2025/05/16 15:09:53 logger.go:29: INFO: Successfully connected to the database
+2025/05/16 15:09:53 logger.go:37: DEBUG: JWT instance created
+2025/05/16 15:09:53 logger.go:29: INFO: Server started on port 8080
+2025/05/16 15:10:58 logger.go:37: DEBUG: Attempting to load .env file
+2025/05/16 15:10:58 logger.go:29: INFO: .env file loaded successfully
+2025/05/16 15:10:58 logger.go:29: INFO: Config loaded: DSN and TOKEN retrieved from environment variables
+2025/05/16 15:10:58 logger.go:29: INFO: Successfully connected to the database
+2025/05/16 15:10:58 logger.go:37: DEBUG: JWT instance created
+2025/05/16 15:10:58 logger.go:29: INFO: Server started on port 8080
+2025/05/16 15:11:29 logger.go:37: DEBUG: Attempting to load .env file
+2025/05/16 15:11:29 logger.go:29: INFO: .env file loaded successfully
+2025/05/16 15:11:29 logger.go:29: INFO: Config loaded: DSN and TOKEN retrieved from environment variables
+2025/05/16 15:11:29 logger.go:29: INFO: Successfully connected to the database
+2025/05/16 15:11:29 logger.go:37: DEBUG: JWT instance created
+2025/05/16 15:11:29 logger.go:29: INFO: Server started on port 8080
+2025/05/16 15:12:11 logger.go:37: DEBUG: Attempting to load .env file
+2025/05/16 15:12:11 logger.go:29: INFO: .env file loaded successfully
+2025/05/16 15:12:11 logger.go:29: INFO: Config loaded: DSN and TOKEN retrieved from environment variables
+2025/05/16 15:12:11 logger.go:29: INFO: Successfully connected to the database
+2025/05/16 15:12:11 logger.go:37: DEBUG: JWT instance created
+2025/05/16 15:12:11 logger.go:29: INFO: Server started on port 8080
